@@ -1,0 +1,7 @@
+project should contain user and admin dashboard
+
+************** User ***************
+100 $ to each trader created by admin
+mongo db as database 
+user dashboard to contain real time data of profit and loss like a graph, with the time stamp of the trades preferably one minute updates 
+
