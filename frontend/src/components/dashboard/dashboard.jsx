@@ -1,6 +1,6 @@
 import React from "react";
 
-function AdminDashboard() {
+function Dashboard() {
   return (
     <div>
       <div className="container">
@@ -12,4 +12,4 @@ function AdminDashboard() {
   );
 }
 
-export default AdminDashboard;
+export default Dashboard;

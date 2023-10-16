@@ -1,11 +1,6 @@
 // src/actions/auth.js
 
-export const login = (username, isAdmin) => ({
+export const login = (email) => ({
   type: "LOGIN",
-  username,
-  isAdmin,
-});
-
-export const logout = () => ({
-  type: "LOGOUT",
+  email,
 });

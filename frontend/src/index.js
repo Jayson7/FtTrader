@@ -5,6 +5,7 @@ import "./index.css";
 import { composeWithDevTools } from "@redux-devtools/extension";
 import { createStore, combineReducers, applyMiddleware } from "redux";
 import { Provider } from "react-redux";
+import userPositionReducer from "./components/redux/reducers/userPosition";
 import authReducer from "./components/redux/reducers/authReducer";
 import thunk from "redux-thunk";
 
@@ -13,6 +14,7 @@ const middleware = [thunk];
 
 const rootReducer = combineReducers({
   auth: authReducer,
+  userPositionReducer,
   // Other reducers here
 });
 

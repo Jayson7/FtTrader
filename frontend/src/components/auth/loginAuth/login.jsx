@@ -1,7 +1,17 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import axios from "axios";
+import { useDispatch, useSelector } from "react-redux";
+import { setUserIsSuperuser } from "../../redux/actions/userPositionAction";
+import client from "../../loaders/ax";
+import { login } from "../../redux/actions/auth";
+import { useNavigate } from "react-router-dom";
 function Login() {
-  const [formData, setFormData] = useState({ username: "", password: "" });
+  const navigate = useNavigate();
+
+  const isAuthenticated = useSelector((state) => state.auth.email);
+  const dispatch = useDispatch();
+  const [formData, setFormData] = useState({ email: "", password: "" });
+  const [error, setError] = useState(null);
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -11,17 +21,37 @@ function Login() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post("your_login_endpoint", formData);
-      console.log("Login successful!", response.data);
+      const loginResponse = await client.post("login", formData);
+      console.log("Login successful!", loginResponse.data);
       // Handle successful login, such as redirecting to another page.
+      dispatch(login(loginResponse.data.email));
+      const userprofile = loginResponse.data.email;
+
+      const checkSuperuserResponse = await client.get(
+        `check_superuser/${userprofile}`
+      );
+      dispatch(setUserIsSuperuser(checkSuperuserResponse.data.is_superuser));
+      console.log(checkSuperuserResponse.data);
+      navigate("/");
     } catch (error) {
-      console.error("Login failed!", error);
+      setError("Login failed. Please check your credentials.");
       // Handle login error, e.g., display an error message.
     }
   };
 
+  useEffect(() => {
+    if (isAuthenticated) {
+      navigate("/"); // Redirect to the home page if authenticated
+    }
+  });
+
   return (
     <div className="container mt-5">
+      {error && (
+        <div className="alert alert-danger" role="alert">
+          {error}
+        </div>
+      )}
       <div className="row justify-content-center">
         <div className="col-md-6 mt-5">
           <div className="card mt-5">
@@ -30,15 +60,15 @@ function Login() {
             <div className="card-body">
               <form onSubmit={handleSubmit}>
                 <div className="form-group">
-                  <label htmlFor="username">Username</label>
+                  <label htmlFor="email">Email</label>
                   <input
                     type="text"
                     className="form-control"
-                    id="username"
-                    name="username"
-                    value={formData.username}
+                    id="email"
+                    name="email"
+                    value={formData.email}
                     onChange={handleInputChange}
-                    placeholder="Enter your username"
+                    placeholder="Enter your Email"
                   />
                 </div>
                 <div className="form-group">
@@ -50,7 +80,7 @@ function Login() {
                     name="password"
                     value={formData.password}
                     onChange={handleInputChange}
-                    placeholder="Enter your password"
+                    placeholder="Enter your password "
                   />
                 </div>
                 <button type="submit" className="btn btn-primary">

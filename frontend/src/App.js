@@ -1,6 +1,12 @@
 import "./App.css";
 import { Link } from "react-router-dom";
+import { useSelector } from "react-redux";
+
 function App() {
+  const isAuthenticated = useSelector((state) => state.auth.email);
+  const isSuperuser = useSelector(
+    (state) => state.userPositionReducer.isSuperuser
+  );
   return (
     <div className="App container py-5">
       <div className="card py-5 d-flex justify-content-center align-items-center mt-5">
@@ -15,11 +21,39 @@ function App() {
           cryptocurrencies, commodities, and more.
         </p>
         <div className="mt-5">
-          <button className="btn btn-info px-5 ">
-            <Link className="text-decoration-none text-light px-5" to={"login"}>
+          {isAuthenticated ? (
+            <div>
+              <Link
+                className="btn btn-info px-5 mx-2 text-decoration-none text-light px-5"
+                to={"dashboard"}
+              >
+                Dashboard
+              </Link>
+
+              {isSuperuser ? (
+                <Link
+                  className="btn btn-success px-5  text-decoration-none text-light px-5 mx-2"
+                  to={"register"}
+                >
+                  Add trader
+                </Link>
+              ) : (
+                <Link
+                  className="btn btn-success px-5 text-decoration-none text-light px-5 mx-2"
+                  to={"trade"}
+                >
+                  Start Trading
+                </Link>
+              )}
+            </div>
+          ) : (
+            <Link
+              className="btn btn-info px-5 text-decoration-none text-light px-5"
+              to={"login"}
+            >
               Login
             </Link>
-          </button>
+          )}
         </div>
       </div>
     </div>

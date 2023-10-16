@@ -1,8 +1,7 @@
+import { LOGOUT } from "../actions/logoutAction";
 // Reducers
 const initialState = {
-  isAuthenticated: false,
-  username: null,
-  isAdmin: false,
+  email: null,
 };
 
 const authReducer = (state = initialState, action) => {
@@ -10,11 +9,10 @@ const authReducer = (state = initialState, action) => {
     case "LOGIN":
       return {
         ...state,
-        isAuthenticated: true,
-        username: action.username,
-        isAdmin: false,
+
+        email: action.email,
       };
-    case "LOGOUT":
+    case LOGOUT:
       return initialState;
     default:
       return state;
