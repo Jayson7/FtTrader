@@ -8,6 +8,7 @@ import Dashboard from "../dashboard/dashboard";
 
 import App from "../../App";
 import Register from "../auth/registration/register";
+import Logout from "../auth/logout/log";
 
 function Navigator() {
   const isAuthenticated = useSelector((state) => state.auth.email);
@@ -66,7 +67,7 @@ function Navigator() {
                 </Link>
               </li>
               <li className="nav-item">
-                <Link className="nav-link" to={"#"}>
+                <Link className="nav-link" to={"logout"}>
                   Logout
                 </Link>
               </li>
@@ -98,6 +99,7 @@ function Navigator() {
         <Route path="/" element={<App />} />
         <Route path="dashboard" element={<Dashboard />} />
         <Route path="register" element={<Register />} />
+        <Route path="logout" element={<Logout />} />
         <Route path="*" element={<NoPage />} />
       </Routes>
     </div>

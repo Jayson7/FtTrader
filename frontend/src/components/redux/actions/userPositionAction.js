@@ -4,3 +4,10 @@ export const setUserIsSuperuser = (isSuperuser) => {
     payload: isSuperuser,
   };
 };
+
+export const setUserIsSuperuserNull = (isSuperuser) => {
+  return {
+    type: "SET_USER_IS_SUPERUSER",
+    payload: isSuperuser,
+  };
+};

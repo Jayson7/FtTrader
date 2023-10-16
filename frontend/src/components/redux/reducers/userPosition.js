@@ -9,6 +9,7 @@ const userPositionReducer = (state = initialState, action) => {
         ...state,
         isSuperuser: action.payload,
       };
+
     default:
       return state;
   }
