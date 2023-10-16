@@ -7,7 +7,6 @@ function Dashboard() {
   const isSuperuser = useSelector(
     (state) => state.userPositionReducer.isSuperuser
   );
-  const username = useSelector((state) => state.auth.username);
 
   return (
     <div>
@@ -24,6 +23,14 @@ function Dashboard() {
           <div className="container">
             <div className="mt-5 text-center alert bg-info text-light">
               Dashboard
+            </div>
+
+            <div className="row">
+              <div className="col-6">
+                <div className="badge badge-secondary py-4 px-3">
+                  Email: {isAuthenticated}
+                </div>
+              </div>
             </div>
           </div>
         </div>
